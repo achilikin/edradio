@@ -5,7 +5,7 @@ CFLAGS += -g
 CFLAGS += -std=gnu99
 LIBS    = -lmraa
 
-APP = rfm12
+APP = edradio
 
 OBJS = main.o swspi.o cio.o cmd.o cli.o rfm12bs.o
 FILES =  Makefile
