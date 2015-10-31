@@ -19,6 +19,6 @@ typedef struct app_config_s {
 	uint8_t rtc_sec;
 } app_cfg_t;
 
-
 extern command_t cli_cmd[];
+
 #endif

@@ -10,6 +10,17 @@ shDAN LBS
 
 This example implements Listening Base Station (**LBS**) for Data Acquisition Network ([shDAN](https://github.com/achilikin/shDAN)) running in interactive command mode. 
 
+```
+root@edisean:/media/sdcard/edradio# ./edradio
+MRAA paltform Intel Edison (Miniboard), version v0.8.0-25-g6aaf489
+started up in 7 msec
+> sync
+>  21:35:28 | TSYNC: 21:35:28
+ 21:35:59 | 11 98 18 14 | NID 1 SID 1 S1 L0 A0 E1 V 3.10 T+24.20
+ 21:36:19 | 15 96 13 00 | NID 5 SID 1 S1 L0 A0 E1 V 2.90 T+19.00
+  
+```
+
 **Following commands are available:**
 
 * _help_ 

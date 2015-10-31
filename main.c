@@ -1,10 +1,9 @@
 /*
   Example of using RFM12BS RF module on Intel Edison with software SPI as an
   Listening Base Station for shDAN project https://github.com/achilikin/shDAN
+  
   Software SPI implemented using memory mapped io with mraa library
   https://github.com/intel-iot-devkit/mraa
-
-  
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,6 +60,7 @@ int	main(UNUSED(int argc), UNUSED(char** argv))
 		cli.interact(&cli, cli_cmd);
 
 		if (rfm12_receive_data(&rfm, &node, sizeof(node), cfg.flags & RFM_RX_DEBUG) == sizeof(node)) {
+			rfm12_set_mode(&rfm, RFM_MODE_RX);
 			if (node.nid == NODE_TSYNC) {
 				tso = rdtsc32();
 				ts_unpack(&node);
@@ -70,8 +70,8 @@ int	main(UNUSED(int argc), UNUSED(char** argv))
 			}
 			if (cfg.flags & APPF_ECHO_DAN)
 				print_node(&cli, &node);
-			rfm12_set_mode(&rfm, RFM_MODE_RX);
 		}
+
 		if (millis(tso) >= 1000) {
 			tso = rdtsc32();
 			if (++cfg.rtc_sec == 60) {
