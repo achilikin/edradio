@@ -83,6 +83,7 @@ int	main(UNUSED(int argc), UNUSED(char** argv))
 				}
 			}
 		}
+		usleep(1); // be nice 
 	}
 
 	stdio_mode(STDIO_MODE_CANON);
