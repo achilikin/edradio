@@ -32,6 +32,7 @@ static int cls_proc(console_io_t *cli, char *arg);
 static int exit_proc(console_io_t *cli, char *arg);
 static int echo_proc(console_io_t *cli, char *arg);
 static int sync_proc(console_io_t *cli, char *arg);
+static int vbat_proc(console_io_t *cli, char *arg);
 
 command_t cli_cmd[] = {
 	{ "help", "", help_proc },
@@ -40,6 +41,7 @@ command_t cli_cmd[] = {
 	{ "quit", "exit application", exit_proc },
 	{ "q", "", exit_proc },
 	{ "echo", "echo rx|dan on|off", echo_proc },
+	{ "vbat", "check battery level", vbat_proc },
 	{ "sync", "send sync request to active base station", sync_proc },
 	{ NULL }
 };
@@ -113,5 +115,16 @@ int sync_proc(console_io_t *cli, UNUSED(char *arg))
 
 	rfm12_send(cfg->rfm, &node, sizeof(node));
 	rfm12_set_mode(cfg->rfm, RFM_MODE_RX);
+	return 0;
+}
+
+int vbat_proc(console_io_t *cli, UNUSED(char *arg))
+{
+	app_cfg_t *cfg = cli->data;
+
+	uint16_t vbat = rfm12_battery(cfg->rfm, RFM_MODE_RX, 14);
+	vbat = vbat * 10 + 230;
+	dprintf(cli->ofd, "Battery: ~%u.%uV\n", vbat/100, vbat % 100);
+
 	return 0;
 }

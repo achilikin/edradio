@@ -8,9 +8,10 @@ To communicate with RFM12BS software version if SPI is implemented using [mraa l
 RFM12BS
 -------    
 
-[RFM12B wireless FSK transceiver module](http://www.hoperf.com/rf/fsk_module/RFM12B.htm)
-[Si4420/21 RF transmitters](http://www.silabs.com/products/wireless/EZRadio/Pages/Si442021.aspx)
-[RFM12BS ARSSI hack](http://blog.strobotics.com.au/2008/06/17/rfm12-tutorial-part2)
+References:
+* [RFM12B wireless FSK transceiver module](http://www.hoperf.com/rf/fsk_module/RFM12B.htm)
+* [Si4420/21 RF transmitters](http://www.silabs.com/products/wireless/EZRadio/Pages/Si442021.aspx)
+* [RFM12BS ARSSI hack](http://blog.strobotics.com.au/2008/06/17/rfm12-tutorial-part2)
 
 Only 7 pins are used + 1 pin for ARSII signal and antenna:
 
@@ -117,7 +118,8 @@ started up in 7 msec
 * _exit|quit|q_
 * _echo_ show current echo configuration
 * _echo rx on|off_ turn data rx on or off
-* _echo dan on|off_ turn DAN protocol parsing on or off* 
+* _echo dan on|off_ turn DAN protocol parsing on or off
+* _vbat_ check battery level
 * _sync_ send sync request to active base station
 
 On startup DAN message parsing is on.
