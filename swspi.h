@@ -43,10 +43,12 @@ typedef struct mraa_sw_spi *mraa_spi_sw_context;
 
 mraa_spi_sw_context sw_spi_init(uint8_t pin_sck, uint8_t pin_mosi, uint8_t pin_miso);
 void sw_spi_close(mraa_spi_sw_context spi);
+
 void sw_spi_write_word(mraa_spi_sw_context spi, uint16_t data);
 uint16_t sw_spi_send_word(mraa_spi_sw_context spi, uint16_t data);
-uint8_t *sw_spi_send_data(mraa_spi_sw_context spi, mraa_gpio_context ss, uint8_t *data, unsigned len);
+
 void sw_spi_write_data(mraa_spi_sw_context spi, mraa_gpio_context ss, uint8_t *data, unsigned len);
+uint8_t *sw_spi_send_data(mraa_spi_sw_context spi, mraa_gpio_context ss, uint8_t *data, unsigned len);
 
 #ifdef __cplusplus
 }
