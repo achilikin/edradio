@@ -3,7 +3,8 @@ EdRadio
 
 EdRadio is an example of using RFM12BS RF module with Intel Edison mini breakout board (or [SparkFun RPi Block](https://www.sparkfun.com/products/13044)).
 
-To communicate with RFM12BS software version if SPI is implemented using [mraa library][] memory mapped io. Kernel version of SPI is not supported at the moment because of [very slow user/kernel][espi] space data transfer.
+To communicate with RFM12BS software version if SPI is implemented using [mraa library][] memory mapped io. Kernel version of SPI is not supported at the moment because of very slow user/kernel space data transfer. [More details on SPI here][espi].
+
 
 RFM12BS
 -------    
@@ -92,6 +93,7 @@ int wait_for_low(mraa_gpio_context pin, uint32_t timeout)
 	rfm12_send(&rfm, &node, sizeof(node));
 	rfm12_set_mode(cfg->rfm, RFM_MODE_RX);
 ```
+[shDAN frame format][shDAN frame]
 
 shDAN LBS
 ---------
@@ -122,5 +124,6 @@ started up in 7 msec
 On startup DAN message parsing is on.
 
 [shDAN]:(https://github.com/achilikin/shDAN)
+[shDAN frame]:(https://github.com/achilikin/shDAN/hDAN_protocol.svg)
 [mraa library]:https://github.com/intel-iot-devkit/mraa
 [espi]:./docs/spi.md
