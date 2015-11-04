@@ -7,7 +7,6 @@ To communicate with RFM12BS software version if SPI is implemented using [mraa l
 
 RFM12BS
 -------    
-
 References:
 * [RFM12B wireless FSK transceiver module](http://www.hoperf.com/rf/fsk_module/RFM12B.htm)
 * [Si4420/21 RF transmitters](http://www.silabs.com/products/wireless/EZRadio/Pages/Si442021.aspx)
@@ -121,6 +120,7 @@ started up in 7 msec
 * _echo dan on|off_ turn DAN protocol parsing on or off
 * _vbat_ check battery level
 * _sync_ send sync request to active base station
+* _clock off|1|1.25|1.66|2|2.5|5|3.33|5|10_ set clock output frequency, MHz
 
 On startup DAN message parsing is on.
 

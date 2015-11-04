@@ -33,6 +33,7 @@ static int exit_proc(console_io_t *cli, char *arg);
 static int echo_proc(console_io_t *cli, char *arg);
 static int sync_proc(console_io_t *cli, char *arg);
 static int vbat_proc(console_io_t *cli, char *arg);
+static int clock_proc(console_io_t *cli, char *arg);
 
 command_t cli_cmd[] = {
 	{ "help", "", help_proc },
@@ -43,6 +44,7 @@ command_t cli_cmd[] = {
 	{ "echo", "echo rx|dan on|off", echo_proc },
 	{ "vbat", "check battery level", vbat_proc },
 	{ "sync", "send sync request to active base station", sync_proc },
+	{ "clock", "off|1|1.25|1.66|2|2.5|5|3.33|5|10, set clock output frequency, MHz", clock_proc },
 	{ NULL }
 };
 
@@ -128,3 +130,43 @@ int vbat_proc(console_io_t *cli, UNUSED(char *arg))
 
 	return 0;
 }
+
+int clock_proc(console_io_t *cli, char *arg)
+{
+	app_cfg_t *cfg = cli->data;
+
+	if (cmd_is(arg, "off")) {
+		cfg->rfm->mode &= ~ RFM_CLOCK_ENABLE;
+		rfm12_set_mode(cfg->rfm, RFM_MODE_RX);
+		return 0;
+	}
+	uint16_t cmd_clock = RFM12CMD_LBDCLK;
+
+	static struct clock {
+		const char *name;
+		uint16_t   clock;
+	} valid_clock[] = {
+		{"1",    RFM12_CLOCK_1_00MHZ },
+		{"1.25", RFM12_CLOCK_1_25MHZ },
+		{"1.66", RFM12_CLOCK_1_66MHZ },
+		{"2",    RFM12_CLOCK_2_00MHZ },
+		{"2.5",  RFM12_CLOCK_2_50MHZ },
+		{"3.33", RFM12_CLOCK_3_33MHZ },
+		{"5",    RFM12_CLOCK_5_00MHZ },
+		{"10",   RFM12_CLOCK_10_0MHZ },
+	};
+
+	for(unsigned i = 0; i < sizeof(valid_clock)/sizeof(valid_clock[0]); i++) {
+		if (cmd_is(arg, valid_clock[i].name)) {
+			cmd_clock |= valid_clock[i].clock;
+			break;
+		}
+	}
+
+	rfm12_cmdw(cfg->rfm, cmd_clock);
+	cfg->rfm->mode |= RFM_CLOCK_ENABLE;
+	rfm12_set_mode(cfg->rfm, RFM_MODE_RX);
+
+	return 0;
+}
+

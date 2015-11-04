@@ -49,7 +49,7 @@ static int rfm_wait_irq(rfm12_t *rfm, uint32_t timeout)
 	return dt;
 }
 
-static void rfm12_cmdw(rfm12_t *rfm, uint16_t cmd)
+void rfm12_cmdw(rfm12_t *rfm, uint16_t cmd)
 {
 	if (!(rfm->mode & RFM_SPI_SELECTED))
 		mraa_gpio_write(rfm->ss, 0);
@@ -164,13 +164,13 @@ void rfm12_set_mode(rfm12_t *rfm, uint8_t mode)
 {
 	uint16_t cmd = RFM12CMD_PWR | RFM12_DCLOCK; // default: sleep
 	cmd |= mode;
-	rfm12_cmdw(rfm, cmd);
+	rfm12_cmdw(rfm, cmd ^ (rfm->mode & RFM_CLOCK_ENABLE));
 
-	rfm->mode &= ~(RFM_MODE_DATA_RX | RFM_MODE_DATA_TX);
+	rfm->mode &= ~(RFM_RECEIVING | RFM_TRANSMITTING);
 	if (mode == RFM_MODE_RX)
-		rfm->mode |= RFM_MODE_DATA_RX;
+		rfm->mode |= RFM_RECEIVING;
 	else if (mode == RFM_MODE_TX)
-		rfm->mode |= RFM_MODE_DATA_TX;
+		rfm->mode |= RFM_TRANSMITTING;
 }
 
 int8_t rfm12_set_txpwr(rfm12_t *rfm, uint8_t pwr)
@@ -377,7 +377,7 @@ static uint16_t rfm12_receive(rfm12_t *rfm, uint16_t *pstatus)
 // (RFM12BS supplies analogue RSSI output on one of the capacitors)
 uint8_t rfm12_receive_data(rfm12_t *rfm, void *dbuf, uint8_t len, uint8_t flags)
 {
-	if (!(rfm->mode & RFM_MODE_DATA_RX))
+	if (!(rfm->mode & RFM_RECEIVING))
 		return 0;
 
 	uint16_t ch;

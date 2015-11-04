@@ -155,6 +155,14 @@ extern "C" {
 
 //** Low Battery Detector and Microcontroller Clock Divider Command
 #define RFM12CMD_LBDCLK 0xC000
+#define RFM12_CLOCK_1_00MHZ 0x00
+#define RFM12_CLOCK_1_25MHZ 0x20
+#define RFM12_CLOCK_1_66MHZ 0x40
+#define RFM12_CLOCK_2_00MHZ 0x60
+#define RFM12_CLOCK_2_50MHZ 0x80
+#define RFM12_CLOCK_3_33MHZ 0xA0
+#define RFM12_CLOCK_5_00MHZ 0xC0
+#define RFM12_CLOCK_10_0MHZ 0xE0
 
 //** PLL Setting Command
 #define RFM12CMD_PLL    0xCC12
@@ -224,16 +232,19 @@ extern "C" {
 #define RFM_MODE_RX    RFM12_ERXCHAIN
 #define RFM_MODE_TX    RFM12_ETXSTART
 
-// RFM12B spi interface mode
-#define RFM_SPI_MODE_HW  0x10
-#define RFM_SPI_SELECTED 0x20
-#define RFM_MODE_DATA_RX 0x01
-#define RFM_MODE_DATA_TX 0x02
-#define RFM_RX_PENDING   0x04
-
 // flags for rfm12_receive_data()
 #define RFM_RX_ADC_MASK 0x07
 #define RFM_RX_DEBUG    0x80
+
+// mode flags for rfm12_s::mode
+#define RFM_CLOCK_ENABLE 0x01
+#define RFM_RECEIVING    0x02
+#define RFM_RX_PENDING   0x04
+#define RFM_TRANSMITTING 0x08
+
+// RFM12B spi interface mode
+#define RFM_SPI_MODE_HW  0x80
+#define RFM_SPI_SELECTED 0x40
 
 typedef struct rfm12_s {
 	mraa_gpio_context   ss;
@@ -251,6 +262,9 @@ void rfm12_close_spi(rfm12_t *rfm);
 
 // initializes RFM12 and puts it to idle mode 
 int8_t rfm12_init(rfm12_t *rfm, uint8_t syncpat, uint8_t band, double freq, uint8_t rate);
+
+// fast command write
+void rfm12_cmdw(rfm12_t *rfm, uint16_t cmd);
 
 // write command to RFM and read return value
 uint16_t rfm12_cmdrw(rfm12_t *rfm, uint16_t cmd);
