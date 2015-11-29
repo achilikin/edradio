@@ -16,9 +16,17 @@ Only 7 pins are used + 1 pin for ARSII signal and antenna:
 
 ![RFM12BS pins](http://achilikin.com/github/rfm12-pins.png)
 
-Mounted on 8 pin DIP socket:
+Mounted vertically on 8 pin DIP socket:
 
 ![RFM12BS pins](http://achilikin.com/github/rfm12-8pin.png)
+
+Or horizontally (note RST pin connected to Vdd - I found that with RST pulled up RF12BS works much stable):
+
+![RFM12BS pins](http://achilikin.com/github/rfm12-8pinh.png)
+
+----------
+
+
 
 Code examples
 -----------------------

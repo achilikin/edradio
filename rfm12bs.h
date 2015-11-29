@@ -79,10 +79,12 @@ extern "C" {
 
 //** Receiver Control Command
 #define RFM12CMD_RX_CTL 0x9000
-#define RFM12_VDI_FAST  0x0400 // valid data indicator signal response time
-#define RFM12_VDI_MED   0x0500 // valid data indicator signal response time
-#define RFM12_VDI_SLOW  0x0600 // valid data indicator signal response time
-#define RFM12_VDI_ON    0x0700 // valid data indicator always on
+#define RFM12_PIN_INT   0x0000 // pin 11 as nInt
+#define RFM12_PIN_VDI   0x0400 // pin 11 as VDI
+#define RFM12_VDI_FAST  0x0000 // valid data indicator signal response time
+#define RFM12_VDI_MED   0x0100 // valid data indicator signal response time
+#define RFM12_VDI_SLOW  0x0200 // valid data indicator signal response time
+#define RFM12_VDI_ON    0x0300 // valid data indicator always on
 #define RFM12_BW_400    0x0020 // receiver baseband bandwidth 400 kHz
 #define RFM12_BW_340    0x0040 // receiver baseband bandwidth 340 kHz
 #define RFM12_BW_270    0x0060 // receiver baseband bandwidth 270 kHz
